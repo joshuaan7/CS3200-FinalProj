@@ -1,5 +1,9 @@
 """
-Python program that will connect to a MySQL database and executes queries from an application program driven by input from a user.
+Python GUI program that encompasses our hospital procedure project.
+The program will connect to a MySQL database and executes queries from an application program driven by input from a user.
+Users will be able to create a profile as either a user searching for hospital procedures or a user on behalf of a hospital.
+Users searching for hospital procedures will be able to query from the database based on input specified by the user.
+Users acting on behalf of a hospital will be able to create, update, delete their specific hospital procedures.
 """
 import pymysql.cursors
 import mysql.connector
@@ -13,6 +17,10 @@ class PythonToSQL():
         """
         self.connection = None
         self.character_name = ""
+        self.connect_to_database()
+        self.input_char_name()
+        self.call_track_characters()
+        self.disconnect()
 
     def disconnect(self):
         """
@@ -28,8 +36,8 @@ class PythonToSQL():
         to connect to the lotrfinal database.
         """
 
-        user_name = input("Enter user name: ")
-        password_name = input("Enter password: ")
+        user_name = input("Enter user name: ") # root
+        password_name = input("Enter password: ") # Supasupa123!
 
         self.connection = pymysql.connect(host='localhost',
                              user=user_name,
@@ -101,7 +109,4 @@ class PythonToSQL():
 # Main function
 if __name__ == "__main__":
     python_to_sql = PythonToSQL()
-    python_to_sql.connect_to_database()
-    python_to_sql.input_char_name()
-    python_to_sql.call_track_characters()
-    python_to_sql.disconnect()
+
