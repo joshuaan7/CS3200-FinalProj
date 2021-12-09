@@ -60,12 +60,11 @@ class HospitalProceduresProgram():
 
         # Should be logged in at this point
         # Determine if email is a requester or hospital user via a procedure
-        if self._check_email_type() == False: # indicates it is a requester
-            self._requester_actions()
-
-        else: # indicates it is a hospital user
+        if self._check_email_type(): # indicates it is a hospital user
             self._hospital_user_actions()
-        
+
+        else: # indicates it is a requester
+            self._requester_actions()        
 
     def _check_email_type(self):
         """
@@ -76,13 +75,13 @@ class HospitalProceduresProgram():
             cursorObject = self.connection.cursor()                                    
 
             # Execute the sqlQuery
-            stmt = 'call check_email_type("{}")'.format(self.email)
+            stmt = 'SELECT check_email_type("{}")'.format(self.email)
             cursorObject.execute(stmt)
 
         except Exception as e:
             print("Exeception occured: {}".format(e))
 
-        return cursorObject == True
+        return cursorObject.fetchone()
 
     def _old_new_user(self):
         """
@@ -120,11 +119,11 @@ class HospitalProceduresProgram():
             cursorObject = self.connection.cursor()                                    
 
             # Execute the sqlQuery
-            stmt = 'call check_email_exists("{}")'.format(email)
+            stmt = 'SELECT check_email_exists("{}")'.format(email)
             cursorObject.execute(stmt)
 
             ## cahnge this logic 
-            if (cursorObject == False):
+            if (not cursorObject.fetchone()):
                 print("Email not found. Please try again.")
                 self._log_in_email()
 
@@ -143,10 +142,10 @@ class HospitalProceduresProgram():
             cursorObject = self.connection.cursor()                                    
 
             # Execute the sqlQuery
-            stmt = 'call check_password_matches("{}")'.format(password)
+            stmt = 'SELECT check_password_matches("{}, {}")'.format(self.email, password)
             cursorObject.execute(stmt)
 
-            if (cursorObject == False):
+            if (not cursorObject):
                 print("Password incorrect. Please try again.")
                 self._log_in_pw()
 
@@ -177,20 +176,33 @@ class HospitalProceduresProgram():
                 cursorObject = self.connection.cursor()                                    
 
                 # Execute the sqlQuery
-                stmt = 'call create_new_requester("{}, {}, {}, {}")'.format(name, email, password, insurance)
+                stmt = 'CALL create_new_requester("{}, {}, {}, {}")'.format(name, email, password, insurance)
                 cursorObject.execute(stmt)
 
             except Exception as e:
                 print("Exeception occured: {}".format(e))
 
         elif user_type == "0":
-            hospital_name = "Please enter the name of the hospital you work for: "
+            cur = self.connection.cursor()                                    
+            hospitals = []
+            stmt_select = "select character_name from lotr_character order by character_name"
+            cur.execute(stmt_select)
+
+            characters = cur.fetchall()
+
+            for char_dict in characters:
+                for _, value in char_dict.items():
+                    hospitals.append(value)
+
+            print("\nList of characters: ")
+            print(hospitals)
+            hospital_name = "Please enter the name of the hospital you work for from the above list. If not listed, add your new hospital: "
             try:
                 # Cursor object creation
                 cursorObject = self.connection.cursor()                                    
 
                 # Execute the sqlQuery
-                stmt = 'call create_new_hospital_user("{}, {}, {}, {}")'.format(name, email, password, hospital_name)
+                stmt = 'CALL create_new_hospital_user("{}, {}, {}, {}")'.format(name, email, password, hospital_name)
                 cursorObject.execute(stmt)
 
             except Exception as e:

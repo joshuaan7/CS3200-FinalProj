@@ -7,7 +7,10 @@ procedure_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 procedure_name VARCHAR(255) NOT NULL,
 procedure_cost DOUBLE NOT NULL,
 procedure_duration DOUBLE NOT NULL,
-procedure_hospital_coverage VARCHAR(255) NOT NULL
+procedure_hospital_coverage VARCHAR(255) NOT NULL,
+
+INDEX hosp_cov (procedure_hospital_coverage),
+FOREIGN KEY (procedure_hospital_coverage) REFERENCES hospital(hospital_name)
 );
 
 -- create and add a new entry to the procedures table
