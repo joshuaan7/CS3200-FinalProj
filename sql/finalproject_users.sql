@@ -3,7 +3,7 @@ USE hospital_procedures_final_proj;
 -- create table of all the users with general information
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE,
+user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 user_name VARCHAR(255) NOT NULL,
 user_email VARCHAR(255) NOT NULL,
 user_password VARCHAR(255) NOT NULL
@@ -44,6 +44,10 @@ VALUES (8, "Kei Bhattachan", "steast.com", "buldakramen");
 -- create and add a new entry to the users table
 INSERT INTO users (user_id, user_name, user_email, user_password)
 VALUES (9, "Dan Kim", "dkim1123.com", "simp123");
+
+-- create and add a new entry to the users table
+INSERT INTO users (user_id, user_name, user_email, user_password)
+VALUES (10, "Jay Hui", "hui.ja@neu.edu", "abuigadga");
 
 -- read a specific entry from the users table
 SELECT user_name FROM users WHERE user_email = "kwirly2000@hotmail.com";

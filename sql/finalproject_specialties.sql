@@ -12,23 +12,31 @@ CONSTRAINT fk_procedures FOREIGN KEY (specialty_procedures_id) REFERENCES proced
 
 
 -- create and add a new entry to the specialties table
--- INSERT INTO specialties (requester_name, requester_email, requester_password, requester_insurance)
--- VALUES ("John Doe", "johndoe@gmail.com", "johndoe2021", "Blue Cross Blue Shield");
+INSERT INTO specialties (specialty_id, specialty_name, specialty_procedures_id)
+VALUES (1, "Orthopedics", 1);
 
 -- create and add a new entry to the specialties table
-INSERT INTO specialties (requester_name, requester_email, requester_password, requester_insurance)
-VALUES ("Kiri Wang", "kwirly2000@hotmail.com", "sobathecat", "Allstate");
+INSERT INTO specialties (specialty_id, specialty_name, specialty_procedures_id)
+VALUES (2, "Cardiothoracic", 2);
 
 -- create and add a new entry to the specialties table
-INSERT INTO specialties (requester_name, requester_email, requester_password, requester_insurance)
-VALUES ("Will Kov", "willkov@hotmail.com", "ood3500", "Progressive");
+INSERT INTO specialties (specialty_id, specialty_name, specialty_procedures_id)
+VALUES (3, "ENT", 4);
+
+-- create and add a new entry to the specialties table
+INSERT INTO specialties (specialty_id, specialty_name, specialty_procedures_id)
+VALUES (4, "Optometry", 3);
+
+-- create and add a new entry to the specialties table
+INSERT INTO specialties (specialty_id, specialty_name, specialty_procedures_id)
+VALUES (5, "Gynecology", 5);
 
 -- read a specific entry from the specialties table
-SELECT requester_name FROM specialties WHERE requester_email = "kwirly2000@hotmail.com";
+SELECT specialty_procedures_id FROM specialties WHERE specialty_name = "Optometry";
 
 -- update a specific entry
-UPDATE specialties SET requester_insurance = "Allstate" WHERE requester_email = "willkov@hotmail.com";
+UPDATE specialties SET specialty_name = "Cosmetic" WHERE specialty_name = "Gynecology";
 
 -- delete entry from specialties table
-DELETE FROM specialties WHERE requester_email = "johndoe@gmail.com";
+DELETE FROM specialties WHERE specialty_id = 2;
 

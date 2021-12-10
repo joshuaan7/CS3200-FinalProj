@@ -5,8 +5,11 @@ DROP TABLE IF EXISTS requesters;
 CREATE TABLE requesters (
 requester_id INT NOT NULL PRIMARY KEY,
 requester_insurance VARCHAR(255) NOT NULL,
+
 INDEX req_id(requester_id),
-FOREIGN KEY (requester_id) REFERENCES users(user_id) 
+INDEX fk_insurance(requester_insurance),
+FOREIGN KEY (requester_id) REFERENCES users(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY (requester_insurance) REFERENCES insurances(insurance_name)
 );
 
 -- create and add a new entry to the requesters table
